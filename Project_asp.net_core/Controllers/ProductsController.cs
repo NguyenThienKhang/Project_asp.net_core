@@ -25,6 +25,13 @@ namespace Project_asp.net_core.Controllers
             var project_aspnet_coreContext = _context.Product.Include(p => p.Category);
             return View(await project_aspnet_coreContext.ToListAsync());
         }
+        [HttpPost]
+        public async Task<IActionResult> Index(int catid,string keyWord)
+        {
+            var project_aspnet_coreContext = _context.Product.Include(p => p.Category).Where(p => p.Name.Contains(keyWord) && p.CategoryId==catid);
+            return View(await project_aspnet_coreContext.ToListAsync());
+        }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -33,7 +40,6 @@ namespace Project_asp.net_core.Controllers
             {
                 return NotFound();
             }
-
             var product = await _context.Product
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -41,7 +47,6 @@ namespace Project_asp.net_core.Controllers
             {
                 return NotFound();
             }
-
             return View(product);
         }
 

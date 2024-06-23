@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Project_asp.net_core.Data;
 using Project_asp.net_core.Models;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace Project_asp.net_core.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly Project_aspnet_coreContext _context;
+
+        public HomeController(Project_aspnet_coreContext context)
         {
-            _logger = logger;
+            _context = context;
         }
-
         public IActionResult Index()
         {
-            return View();
+            return View(_context.Product.ToList());
         }
 
         public IActionResult Privacy()
